@@ -3,6 +3,7 @@
 
 #include "RedstoneSimulator.h"
 #include "BlockEntities/RedstonePoweredEntity.h"
+#include <bitset>
 
 class cWorld;
 class cChunk;
@@ -37,15 +38,14 @@ public:
 	virtual bool IsAllowedBlock(BLOCKTYPE a_BlockType) override { return IsRedstone(a_BlockType); }
 	virtual void WakeUp(int a_BlockX, int a_BlockY, int a_BlockZ, cChunk * a_Chunk) override;
 
-	enum eRedstoneDirection
+	enum eRedstoneWireDirectionBitfieldPositions
 	{
-		REDSTONE_NONE = 0,
-		REDSTONE_X_POS = 0x1,
-		REDSTONE_X_NEG = 0x2,
-		REDSTONE_Z_POS = 0x4,
-		REDSTONE_Z_NEG = 0x8,
+		eWbpXP = 0,
+		eWbpXN = 1,
+		eWbpZP = 2,
+		eWbpZN = 3,
 	};
-	eRedstoneDirection GetWireDirection(int a_BlockX, int a_BlockY, int a_BlockZ);
+	std::bitset<4> GetWireDirection(int a_BlockX, int a_BlockY, int a_BlockZ);
 
 private:
 
@@ -191,6 +191,9 @@ private:
 	/** Marks a block as powered */
 	void SetBlockPowered(Vector3i a_RelBlockPosition, Vector3i a_RelSourcePosition, unsigned char a_PowerLevel = MAX_POWER_LEVEL);
 	void SetBlockPowered(int a_RelBlockX, int a_RelBlockY, int a_RelBlockZ, int a_RelSourceX, int a_RelSourceY, int a_RelSourceZ, unsigned char a_PowerLevel = MAX_POWER_LEVEL) { SetBlockPowered(Vector3i(a_RelBlockX, a_RelBlockY, a_RelBlockZ), Vector3i(a_RelSourceX, a_RelSourceY, a_RelSourceZ), a_PowerLevel); }
+
+	void FindAndPowerBorderingWires(std::vector<std::pair<Vector3i, cChunk *>> & a_PotentialWireList, const std::pair<Vector3i, cChunk *> & a_Entry);
+	void SetWirePowered(std::vector<std::pair<Vector3i, cChunk *>> & a_PotentialWireList, const std::pair<Vector3i, cChunk *> & a_Entry, Vector3i a_RelBlockPos);
 
 	/** Marks a block as being powered through another block */
 	void SetBlockLinkedPowered(int a_RelBlockX, int a_RelBlockY, int a_RelBlockZ, int a_RelMiddleX, int a_RelMiddleY, int a_RelMiddleZ, int a_RelSourceX, int a_RelSourceY, int a_RelSourceZ, BLOCKTYPE a_MiddeBlock, unsigned char a_PowerLevel = MAX_POWER_LEVEL);
