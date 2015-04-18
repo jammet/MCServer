@@ -1917,15 +1917,13 @@ a_Player:OpenWindow(Window);
 			Inherits = "cPawn",
 		},  -- cPlayer
 
-		cPlugin =
+		cPluginLua =
 		{
-			Desc = [[cPlugin describes a Lua plugin. This page is dedicated to new-style plugins and contain their functions. Each plugin has its own Plugin object.
+			Desc = [[cPluginLua describes a Lua plugin. This page is dedicated to new-style plugins and contain their functions. Each plugin has its own PluginLua object.
 ]],
 			Functions =
 			{
-				Call = { Params = "Function name, [All the parameters divided with commas]", Notes = "(<b>OBSOLETE</b>) This function allows you to call a function from another plugin. It can only use pass: integers, booleans, strings and usertypes (cPlayer, cEntity, cCuboid, etc.).<br /><br /><b>This function is obsolete and unsafe, use {{cPluginManager}}:CallPlugin() instead!</b>" },
 				GetDirectory = { Return = "string", Notes = "Returns the name of the folder where the plugin's files are. (APIDump)" },
-				GetLocalDirectory = { Notes = "OBSOLETE use GetLocalFolder instead." },
 				GetLocalFolder = { Return = "string", Notes = "Returns the path where the plugin's files are. (Plugins/APIDump)" },
 				GetName = { Return = "string", Notes = "Returns the name of the plugin." },
 				SetName = { Params = "string", Notes = "Sets the name of the Plugin." },
@@ -1934,13 +1932,6 @@ a_Player:OpenWindow(Window);
 				GetFileName = { Return = "string" },
 				CreateWebPlugin = { Notes = "{{cWebPlugin|cWebPlugin}}" },
 			},
-		},  -- cPlugin
-
-		cPluginLua =
-		{
-			Desc = "",
-			Functions = {},
-			Inherits = "cPlugin",
 		},  -- cPluginLua
 
 		cPluginManager =

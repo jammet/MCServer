@@ -3,9 +3,8 @@
 
 #include "WebAdmin.h"
 #include "Bindings/WebPlugin.h"
-
+#include "Bindings/PluginLua.h"
 #include "Bindings/PluginManager.h"
-#include "Bindings/Plugin.h"
 
 #include "World.h"
 #include "Entities/Player.h"
